@@ -44,52 +44,7 @@ export default function SeeCards() {
 
                         </View>
                     </View>
-                    <View style={styles.itens}>
 
-                        <Text style={styles.dica}>
-                            Aqui tem que colocar a dica de maneira dinamica.
-                        </Text>
-                        <View style={styles.edit}>
-                            <DefaultButton
-                                style={styles.button}
-                                buttonText={"🖊️"}
-                                handlePress={handleNavAppEdit}
-                                width={50}
-                                height={50}
-                            />
-                            <DefaultButton
-                                style={styles.button}
-                                buttonText={"🗑️"}
-                                handlePress={handleNavAppExclude}
-                                width={50}
-                                height={50}
-                            />
-
-                        </View>
-                    </View>
-                    <View style={styles.itens}>
-
-                        <Text style={styles.dica}>
-                            Aqui tem que colocar a dica de maneira dinamica.
-                        </Text>
-                        <View style={styles.edit}>
-                            <DefaultButton
-                                style={styles.button}
-                                buttonText={"🖊️"}
-                                handlePress={handleNavAppEdit}
-                                width={50}
-                                height={50}
-                            />
-                            <DefaultButton
-                                style={styles.button}
-                                buttonText={"🗑️"}
-                                handlePress={handleNavAppExclude}
-                                width={50}
-                                height={50}
-                            />
-
-                        </View>
-                    </View>
 
 
 
