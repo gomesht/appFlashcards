@@ -1,18 +1,22 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 
 import DefaultButton from "../../Components/Common/DefaultButton";
 
 export default function PlayCards() {
+    const navigation = useNavigation();
 
     const handleNavAppSee = () => {
+        // criar função para mostrar a explicação apenas após o click
         console.log("Ver explicação");
     };
     const handleNavAppNext = () => {
+        //criar função para renderizar conteúdo do proximo card
         console.log("Proximo card");
     };
     const handleNavAppBack = () => {
-        console.log("Voltar");
+        navigation.navigate("Start");
     };
     return (
         <View style={styles.container}>
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#000",
+        color: "#BB2649",
         textAlign: "center",
         marginTop: 80,
         marginBottom: 10,
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     title2: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#000",
+        color: "#BB2649",
         textAlign: "center",
         marginTop: 10,
         marginBottom: 10,
@@ -95,24 +99,24 @@ const styles = StyleSheet.create({
     },
 
     dica: {
-        color: "white",
+        color: "#BB2649",
         textAlign: "center",
         marginBottom: 10,
         fontSize: 16,
         borderWidth: 1,
-        borderColor: "#FFFFFF",
+        borderColor: "#BB2649",
         borderRadius: 10,
         height: 100,
         width: 300,
 
     },
     content: {
-        color: "white",
+        color: "#BB2649",
         textAlign: "center",
         marginBottom: 10,
         fontSize: 16,
         borderWidth: 1,
-        borderColor: "#FFFFFF",
+        borderColor: "#BB2649",
         borderRadius: 10,
         height: 300,
         width: 300,

@@ -15,10 +15,10 @@ export default function AllPages() {
                     headerShown: false,
                 }}
             >
+                <Stack.Screen name="Start" component={Start} />
                 <Stack.Screen name="SeeCards" component={SeeCards} />
                 <Stack.Screen name="AddCards" component={AddCards} />
                 <Stack.Screen name="PlayCards" component={PlayCards} />
-                <Stack.Screen name="Start" component={Start} />
             </Stack.Navigator>
 
 

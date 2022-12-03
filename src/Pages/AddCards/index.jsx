@@ -1,16 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import { View, Text, Image, ScrollView, StyleSheet, TextInput } from "react-native";
 
 import DefaultButton from "../../Components/Common/DefaultButton";
 
 export default function AddCards() {
 
+    const navigation = useNavigation();
+
     const handleNavAppSave = () => {
-        console.log("Salvar");
+        alert("FlashCard salvo!");
+        navigation.navigate("Start");
     };
 
     const handleNavAppBack = () => {
-        console.log("Voltar");
+        navigation.navigate("Start");
     };
     return (
         <View style={styles.container}>
@@ -19,16 +23,23 @@ export default function AddCards() {
                     <Text style={styles.title}>
                         Dica:
                     </Text>
-                    <Text style={styles.dica}>
-                        Aqui tem ser um imput.
-                    </Text>
+                    <View>
+                        <TextInput style={styles.dica}
+                            multiline={true}
+                            numberOfLines={2}
+                        />
+                    </View>
 
                     <Text style={styles.title2}>
                         Content:
                     </Text>
-                    <Text style={styles.content}>
-                        Aqui tem que ser outro input.
-                    </Text>
+                    <View style={styles.content}>
+                        <TextInput
+                            style={styles.textArea}
+                            multiline={true}
+                            numberOfLines={6}
+                        />
+                    </View>
                     <View style={styles.botoes}>
                         <DefaultButton
                             style={styles.button}
@@ -65,7 +76,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#000",
+        color: "#BB2649",
         textAlign: "center",
         marginTop: 80,
         marginBottom: 10,
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
     title2: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#000",
+        color: "#BB2649",
         textAlign: "center",
         marginTop: 10,
         marginBottom: 10,
@@ -86,24 +97,24 @@ const styles = StyleSheet.create({
     },
 
     dica: {
-        color: "white",
+        color: "#BB2649",
         textAlign: "center",
         marginBottom: 60,
         fontSize: 16,
         borderWidth: 1,
-        borderColor: "#FFFFFF",
+        borderColor: "#BB2649",
         borderRadius: 10,
         height: 100,
         width: 300,
 
     },
     content: {
-        color: "white",
+        color: "#BB2649",
         textAlign: "center",
         marginBottom: 10,
         fontSize: 16,
         borderWidth: 1,
-        borderColor: "#FFFFFF",
+        borderColor: "#BB2649",
         borderRadius: 10,
         height: 300,
         width: 300,
@@ -124,5 +135,18 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-    }
+    },
+    textAreaContainer: {
+        marginBottom: 60,
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: "#BB2649",
+        borderRadius: 10,
+        height: 100,
+        width: 300,
+    },
+    textArea: {
+        height: 150,
+        justifyContent: "flex-start",
+    },
 });

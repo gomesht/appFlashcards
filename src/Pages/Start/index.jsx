@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 
@@ -5,14 +6,18 @@ import DefaultButton from "../../Components/Common/DefaultButton";
 
 export default function Start() {
 
-    const handleNavAppSeeCards = () => {
-        console.log("Testando o clique see cards");
+    const navigation = useNavigation();
+
+    function handleNavAppSeeCards() {
+        navigation.navigate("SeeCards");
     };
-    const handleNavAppAddCards = () => {
-        console.log("Testando o clique add");
+
+    function handleNavAppAddCards() {
+        navigation.navigate("AddCards");
     };
-    const handleNavAppPlay = () => {
-        console.log("Testando o clique play");
+
+    function handleNavAppPlay() {
+        navigation.navigate("PlayCards");
     };
 
     return (
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: "bold",
-        color: "#000",
+        color: "#BB2649",
         textAlign: "center",
         marginVertical: 40,
         backgroundColor: "#FFFF",
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
     },
 
     description: {
-        color: "white",
+        color: "#BB2649",
         textAlign: "center",
         marginBottom: 30,
         fontSize: 16,
