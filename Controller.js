@@ -28,6 +28,34 @@ app.post('/create', async (req, res) => {
     }
 });
 
+app.get('/read', async (req, res) => {
+    let read = await model.FlashCard.findAll({
+        attributes: ['id', 'dica', 'texto'],
+        where: {
+            'status': true
+        }
+    });
+    console.log(read)
+});
+
+app.get('/update', async (req, res) => {
+    let update = await model.FlashCard.findOne({ where: { 'id': 1 } }).then((response) => {
+        response.dica = "dica 0";
+        response.texto = "texto dica 0";
+        response.updatedAt = new Date();
+        response.save();
+    });
+
+});
+app.get('/delete', async (req, res) => {
+    let update = await model.FlashCard.findOne({ where: { 'id': 1 } }).then((response) => {
+        response.status = false;
+        response.updatedAt = new Date();
+        response.save();
+    });
+
+});
+
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
     console.log("servidor rodando")
