@@ -1,78 +1,112 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet, Alert } from "react-native";
-
+import React, { useEffect, useState } from "react";
+import { View, Text, ScrollView, StyleSheet, Alert } from "react-native";
 import DefaultButton from "../../Components/Common/DefaultButton";
+import config from "../../../config/config.json"
 
 export default function SeeCards() {
     const navigation = useNavigation();
+    const [card, setCard] = useState(null);
+    const [id, setId] = useState(null);
+
+
+    async function listCards() {
+        let reqs = await fetch(config.urlRootNode + 'read/', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        let ress = await reqs.json();
+        // ress.data.map((elem) => {
+        //     console.log(elem.dica);
+        // })
+        setCard(ress);
+        console.log(ress);
+    }
+    useEffect(() => {
+        listCards();
+    }, []);
 
     const handleNavAppEdit = () => {
         navigation.navigate("AddCards");
     };
-    const handleNavAppExclude = () => {
+    async function handleNavAppExclude(item) {
         // fazer função para excluir Card
-        alert("FlashCard excluído!")
-        navigation.navigate("Start");
+        console.log("chamou o exclude")
+        let reqs = await fetch(config.urlRootNode + 'delete', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idFlashcard: item,
+                statusFlashcard: false,
+
+            })
+
+        })
+
+        // alert("FlashCard excluído!")
+        // navigation.navigate("Start");
     };
     const handleNavAppBack = () => {
         navigation.navigate("Start");
     };
+
+
+
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View>
-                    <Text style={styles.title}>
-                        Cards:
-                    </Text>
-                    <View style={styles.itens}>
+                <Text style={styles.title}>
+                    Cards:
+                </Text>
 
-                        <Text style={styles.dica}>
-                            Aqui tem que colocar a dica de maneira dinamica.
-                        </Text>
-                        <View style={styles.edit}>
-                            <DefaultButton
-                                style={styles.button}
-                                buttonText={"🖊️"}
-                                handlePress={handleNavAppEdit}
-                                width={50}
-                                height={50}
-                            />
-                            <DefaultButton
-                                style={styles.button}
-                                buttonText={"🗑️"}
-                                handlePress={handleNavAppExclude}
-                                width={50}
-                                height={50}
-                            />
+                {card && (
+                    card.map((elem, ind) => {
+                        return (
+                            <View key={ind} style={styles.itens}>
 
-                        </View>
-                    </View>
+                                <Text style={styles.dica}>
+                                    {elem.dica}
+                                </Text>
+                                <View style={styles.edit}>
+                                    <DefaultButton
+                                        style={styles.button}
+                                        buttonText={"🖊️"}
+                                        handlePress={handleNavAppEdit}
+                                        width={50}
+                                        height={50}
+                                    />
+                                    <DefaultButton
+                                        style={styles.button}
+                                        buttonText={"🗑️"}
+                                        handlePress={handleNavAppExclude(elem.id)}
+                                        width={50}
+                                        height={50}
+                                    />
 
-
-
-
-
-                    <View style={styles.botoes}>
-
-                        <DefaultButton
-                            style={styles.button}
-                            buttonText={"Exit"}
-                            handlePress={handleNavAppBack}
-                            width={300}
-                            height={50}
-                        />
-
-                    </View>
-
-
-
-                </View>
+                                </View>
+                            </View>
+                        );
+                    })
+                )}
+                <DefaultButton
+                    style={styles.button}
+                    buttonText={"Exit"}
+                    handlePress={handleNavAppBack}
+                    width={300}
+                    height={50}
+                />
             </ScrollView>
         </View>
 
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

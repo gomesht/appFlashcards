@@ -29,26 +29,30 @@ app.post('/create', async (req, res) => {
 });
 
 app.get('/read', async (req, res) => {
-    let read = await model.FlashCard.findAll({
-        attributes: ['id', 'dica', 'texto'],
-        where: {
-            'status': true
+    let read = await model.FlashCard.findAll(
+        {
+            where: {
+                'status': true
+            }
         }
-    });
+    );
+    if (read) {
+        res.send(JSON.stringify(read));
+    }
     console.log(read)
 });
 
 app.get('/update', async (req, res) => {
-    let update = await model.FlashCard.findOne({ where: { 'id': 1 } }).then((response) => {
-        response.dica = "dica 0";
-        response.texto = "texto dica 0";
+    let update = await model.FlashCard.findOne({ where: { 'id': req.body.idFlashcard } }).then((response) => {
+        response.dica = req.body.dicaFlashcard;
+        response.texto = req.body.textoFlashcard;
         response.updatedAt = new Date();
         response.save();
     });
 
 });
 app.get('/delete', async (req, res) => {
-    let update = await model.FlashCard.findOne({ where: { 'id': 1 } }).then((response) => {
+    let update = await model.FlashCard.findOne({ where: { 'id': req.body.idFlashcard } }).then((response) => {
         response.status = false;
         response.updatedAt = new Date();
         response.save();

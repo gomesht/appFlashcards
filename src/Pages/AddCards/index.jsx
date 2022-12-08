@@ -36,17 +36,15 @@ export default function AddCards() {
             })
 
         })
-
         let ress = await reqs.json();
         setMessage(ress);
         {
-            message && (
-                alert(message),
+            ress && (
+                alert(ress),
                 navigation.navigate("Start")
             )
         }
-        // alert("FlashCard salvo!");
-        // navigation.navigate("Start")
+
     }
     return (
         <View style={styles.container}>

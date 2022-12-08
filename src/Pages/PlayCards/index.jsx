@@ -1,14 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import e from "cors";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
-
+import config from "../../../config/config.json"
 import DefaultButton from "../../Components/Common/DefaultButton";
 
 export default function PlayCards() {
     const navigation = useNavigation();
+    const [card, setCard] = useState(null);
+    // let [stackCard, setStackCard] = useState(null);
+
 
     const handleNavAppSee = () => {
         // criar função para mostrar a explicação apenas após o click
+
+
         console.log("Ver explicação");
     };
     const handleNavAppNext = () => {
@@ -18,56 +24,100 @@ export default function PlayCards() {
     const handleNavAppBack = () => {
         navigation.navigate("Start");
     };
+
+    async function selectCards() {
+        let reqs = await fetch(config.urlRootNode + 'read/', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+        let ress = await reqs.json();
+        // ress.data.map((elem) => {
+        //     console.log(elem.dica);
+        // })
+        setCard(ress);
+    }
+    useEffect(() => {
+        selectCards();
+    }, []);
+    // function randOrd() {
+    //     return (Math.round(Math.random()) - 0.5);
+    // }
+    // function orderCards() {
+    //     card && (
+    //         (setStackCard(card.sort(randOrd)))
+    //     )
+
+
+    // }
+    // useEffect(() => {
+    //     orderCards();
+    // }, []);
+    // console.log("cards:")
+    // console.log(card)
+    // console.log("stack cards:")
+    // console.log(stackCard)
+
+
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View>
-                    <Text style={styles.title}>
-                        Dica:
-                    </Text>
-                    <Text style={styles.dica}>
-                        Aqui tem que colocar a dica de maneira dinamica.
-                    </Text>
+                {card && (card.map((elem, ind) => {
+                    return (
+                        <View key={ind}>
+                            <Text style={styles.title}>
+                                Dica:
+                            </Text>
+                            <Text style={styles.dica}>
+                                {elem.dica}
+                            </Text>
 
-                    <DefaultButton
-                        style={styles.button}
-                        buttonText={"Show-me"}
-                        handlePress={handleNavAppSee}
-                        width={300}
-                        height={50}
-                    />
-                    <Text style={styles.title2}>
-                        Content:
-                    </Text>
-                    <Text style={styles.content}>
-                        Aqui tem que colocar o conteudo de maneira dinamica.
-                    </Text>
-                    <View style={styles.botoes}>
-                        <DefaultButton
-                            style={styles.button}
-                            buttonText={"Next"}
-                            handlePress={handleNavAppNext}
-                            width={145}
-                            height={50}
-                        />
-                        <DefaultButton
-                            style={styles.button}
-                            buttonText={"Exit"}
-                            handlePress={handleNavAppBack}
-                            width={145}
-                            height={50}
-                        />
+                            <DefaultButton
+                                style={styles.button}
+                                buttonText={"Show-me"}
+                                handlePress={handleNavAppSee}
+                                width={300}
+                                height={50}
+                            />
+                            <Text style={styles.title2}>
+                                Content:
+                            </Text>
+                            <Text style={styles.content}>
+                                {elem.texto}
+                            </Text>
+                            <View style={styles.botoes}>
+                                <DefaultButton
+                                    style={styles.button}
+                                    buttonText={"Next"}
+                                    handlePress={handleNavAppNext}
+                                    width={145}
+                                    height={50}
+                                />
+                                <DefaultButton
+                                    style={styles.button}
+                                    buttonText={"Exit"}
+                                    handlePress={handleNavAppBack}
+                                    width={145}
+                                    height={50}
+                                />
 
-                    </View>
+                            </View>
 
 
 
-                </View>
+                        </View>
+                    );
+                })
+                )}
+
             </ScrollView>
         </View>
 
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
