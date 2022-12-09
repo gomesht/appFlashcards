@@ -17,7 +17,7 @@ export default function Start() {
     };
 
     function handleNavAppPlay() {
-        navigation.navigate("PlayCards");
+        navigation.navigate("PlayCards", { index: 0 });
     };
 
     return (

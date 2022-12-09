@@ -5,21 +5,24 @@ import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import config from "../../../config/config.json"
 import DefaultButton from "../../Components/Common/DefaultButton";
 
-export default function PlayCards() {
+export default function PlayCards({ route }) {
+    const { index, cardsArray } = route.params;
+    console.log(typeof index);
     const navigation = useNavigation();
     const [card, setCard] = useState(null);
-    // let [stackCard, setStackCard] = useState(null);
+    const [stackCard, setStackCard] = useState(cardsArray);
+    const [showText, setShowText] = useState(false);
 
 
     const handleNavAppSee = () => {
         // criar função para mostrar a explicação apenas após o click
-
+        setShowText(true)
 
         console.log("Ver explicação");
     };
     const handleNavAppNext = () => {
         //criar função para renderizar conteúdo do proximo card
-        console.log("Proximo card");
+        navigation.navigate("PlayCards", { index: Number(index + 1), cardsArray: stackCard });
     };
     const handleNavAppBack = () => {
         navigation.navigate("Start");
@@ -34,83 +37,79 @@ export default function PlayCards() {
             }
         });
         let ress = await reqs.json();
-        // ress.data.map((elem) => {
-        //     console.log(elem.dica);
+        // ress.data.map((stackCard[index]) => {
+        //     console.log(stackCard[index].dica);
         // })
         setCard(ress);
     }
     useEffect(() => {
-        selectCards();
-    }, []);
-    // function randOrd() {
-    //     return (Math.round(Math.random()) - 0.5);
-    // }
-    // function orderCards() {
-    //     card && (
-    //         (setStackCard(card.sort(randOrd)))
-    //     )
+        index === 0 &&
+            selectCards();
+    }, [index]);
+    function randOrd() {
+        return (Math.round(Math.random()) - 0.5);
+    }
+    function orderCards() {
+        card && (
+            (setStackCard(card.sort(() => Math.random() - 0.5)))
+        )
 
+    }
+    useEffect(() => {
+        card && card.length && orderCards();
+    }, [card]);
 
-    // }
-    // useEffect(() => {
-    //     orderCards();
-    // }, []);
-    // console.log("cards:")
-    // console.log(card)
-    // console.log("stack cards:")
-    // console.log(stackCard)
 
 
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                {card && (card.map((elem, ind) => {
-                    return (
-                        <View key={ind}>
-                            <Text style={styles.title}>
-                                Dica:
-                            </Text>
-                            <Text style={styles.dica}>
-                                {elem.dica}
-                            </Text>
+                {stackCard && stackCard.length &&
+                    <View>
+                        <Text style={styles.title}>
+                            Dica:
+                        </Text>
+                        <Text style={styles.dica}>
+                            {stackCard[index].dica}
+                        </Text>
 
+                        <DefaultButton
+                            style={styles.button}
+                            buttonText={"Show-me"}
+                            handlePress={handleNavAppSee}
+                            width={300}
+                            height={50}
+                        />
+                        <Text style={styles.title2}>
+                            Content:
+                        </Text>
+                        {showText &&
+                            <Text style={styles.content}>
+                                {stackCard[index].texto}
+                            </Text>
+                        }
+                        <View style={styles.botoes}>
                             <DefaultButton
                                 style={styles.button}
-                                buttonText={"Show-me"}
-                                handlePress={handleNavAppSee}
-                                width={300}
+                                buttonText={"Next"}
+                                handlePress={handleNavAppNext}
+                                width={145}
                                 height={50}
                             />
-                            <Text style={styles.title2}>
-                                Content:
-                            </Text>
-                            <Text style={styles.content}>
-                                {elem.texto}
-                            </Text>
-                            <View style={styles.botoes}>
-                                <DefaultButton
-                                    style={styles.button}
-                                    buttonText={"Next"}
-                                    handlePress={handleNavAppNext}
-                                    width={145}
-                                    height={50}
-                                />
-                                <DefaultButton
-                                    style={styles.button}
-                                    buttonText={"Exit"}
-                                    handlePress={handleNavAppBack}
-                                    width={145}
-                                    height={50}
-                                />
-
-                            </View>
-
-
+                            <DefaultButton
+                                style={styles.button}
+                                buttonText={"Exit"}
+                                handlePress={handleNavAppBack}
+                                width={145}
+                                height={50}
+                            />
 
                         </View>
-                    );
-                })
-                )}
+
+
+
+                    </View>
+                }
 
             </ScrollView>
         </View>

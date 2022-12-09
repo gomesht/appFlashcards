@@ -10,6 +10,7 @@ export default function SeeCards() {
     const [id, setId] = useState(null);
 
 
+
     async function listCards() {
         let reqs = await fetch(config.urlRootNode + 'read/', {
             method: 'GET',
@@ -29,14 +30,13 @@ export default function SeeCards() {
         listCards();
     }, []);
 
-    const handleNavAppEdit = () => {
-        navigation.navigate("AddCards");
+    const handleNavAppEdit = (elem) => {
+        navigation.navigate("EditCards", { elem });
     };
     async function handleNavAppExclude(item) {
-        // fazer função para excluir Card
-        console.log("chamou o exclude")
-        let reqs = await fetch(config.urlRootNode + 'delete', {
-            method: 'POST',
+        //função para excluir Card
+        const resp = await fetch(config.urlRootNode + 'delete', {
+            method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -48,6 +48,7 @@ export default function SeeCards() {
             })
 
         })
+        console.log(resp);
 
         // alert("FlashCard excluído!")
         // navigation.navigate("Start");
@@ -77,14 +78,14 @@ export default function SeeCards() {
                                     <DefaultButton
                                         style={styles.button}
                                         buttonText={"🖊️"}
-                                        handlePress={handleNavAppEdit}
+                                        handlePress={() => handleNavAppEdit(elem)}
                                         width={50}
                                         height={50}
                                     />
                                     <DefaultButton
                                         style={styles.button}
                                         buttonText={"🗑️"}
-                                        handlePress={handleNavAppExclude(elem.id)}
+                                        handlePress={() => handleNavAppExclude(elem.id)}
                                         width={50}
                                         height={50}
                                     />

@@ -42,7 +42,7 @@ app.get('/read', async (req, res) => {
     console.log(read)
 });
 
-app.get('/update', async (req, res) => {
+app.patch('/update', async (req, res) => {
     let update = await model.FlashCard.findOne({ where: { 'id': req.body.idFlashcard } }).then((response) => {
         response.dica = req.body.dicaFlashcard;
         response.texto = req.body.textoFlashcard;
@@ -51,12 +51,14 @@ app.get('/update', async (req, res) => {
     });
 
 });
-app.get('/delete', async (req, res) => {
+app.delete('/delete', async (req, res) => {
     let update = await model.FlashCard.findOne({ where: { 'id': req.body.idFlashcard } }).then((response) => {
         response.status = false;
         response.updatedAt = new Date();
         response.save();
+
     });
+    return update
 
 });
 
