@@ -22,7 +22,7 @@ export default function EditCards({ route }) {
 
 
     //Envia os dados do formulário para o backend
-    async function registerFlashcard() {
+    async function updateFlashcard() {
         console.log("chamou o register")
         let reqs = await fetch(config.urlRootNode + 'update', {
             method: 'PATCH',
@@ -84,7 +84,7 @@ export default function EditCards({ route }) {
                         <DefaultButton
                             style={styles.button}
                             buttonText={"Save"}
-                            handlePress={registerFlashcard}
+                            handlePress={updateFlashcard}
                             width={145}
                             height={50}
                         />

@@ -7,7 +7,6 @@ import DefaultButton from "../../Components/Common/DefaultButton";
 
 export default function PlayCards({ route }) {
     const { index, cardsArray } = route.params;
-    console.log(typeof index);
     const navigation = useNavigation();
     const [card, setCard] = useState(null);
     const [stackCard, setStackCard] = useState(cardsArray);
@@ -22,6 +21,8 @@ export default function PlayCards({ route }) {
     };
     const handleNavAppNext = () => {
         //criar função para renderizar conteúdo do proximo card
+
+        setShowText(false)
         navigation.navigate("PlayCards", { index: Number(index + 1), cardsArray: stackCard });
     };
     const handleNavAppBack = () => {

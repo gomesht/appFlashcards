@@ -164,6 +164,9 @@ const styles = StyleSheet.create({
         width: 300,
 
     },
+    textArea: {
+        color: "#BB2649",
+    },
     button: {
         alignSelf: "center",
 

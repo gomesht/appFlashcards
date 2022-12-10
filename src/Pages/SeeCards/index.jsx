@@ -47,11 +47,11 @@ export default function SeeCards() {
 
             })
 
-        })
-        console.log(resp);
+        });
+        console.log("chegou aqui");
 
-        // alert("FlashCard excluído!")
-        // navigation.navigate("Start");
+        alert("FlashCard excluído!");
+        navigation.navigate("Start");
     };
     const handleNavAppBack = () => {
         navigation.navigate("Start");
